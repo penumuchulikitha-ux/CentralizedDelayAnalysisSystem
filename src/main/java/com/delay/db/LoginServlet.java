@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 		    if(empNo.equals("admin") && password.equals("admin")) 
 		    {
 		    	request.getSession().setAttribute("username", empNo);
-		    	response.sendRedirect("dashboard.jsp");
+		    	response.sendRedirect("DashboardServlet");
 		    } else {
 		        response.sendRedirect("login.jsp");
 	     }

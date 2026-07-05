@@ -51,8 +51,21 @@ Duration diff = Duration.between(from, upto);
 double delay_duration = diff.toMinutes() / 60.0;
 
 
+//AI Alert
+String alertMessage = "";
+String alertClass = "ok";
 
-// getting logged in user
+if (delay_duration >= 5) {
+ alertMessage = "⚠ HIGH DELAY! Immediate action required.";
+ alertClass = "critical";
+} else if (delay_duration >= 2) {
+ alertMessage = "⚠ Moderate Delay. Supervisor attention required.";
+ alertClass = "warning";
+} else {
+ alertMessage = "✅ Normal Delay.";
+ alertClass = "ok";
+}
+
 
 HttpSession session = request.getSession();
 
@@ -107,43 +120,22 @@ response.setContentType("text/html");
 
 PrintWriter out = response.getWriter();
 
-
 out.println("<html>");
 out.println("<head>");
-out.println("<style>");
-
-out.println("body{font-family:Arial;background:linear-gradient(to right,aliceblue,lightgreen);height:100vh;display:flex;justify-content:center;align-items:center;}");
-
-out.println(".box{background:white;padding:40px;border-radius:20px;text-align:center;box-shadow:0px 0px 20px gray;width:450px;}");
-
-out.println("h2{color:green;}");
-
-out.println("p{color:darkblue;font-size:18px;}");
-
-out.println("button{background:blue;color:white;padding:12px 25px;border:none;border-radius:10px;font-size:16px;}");
-
-out.println("</style>");
-
+out.println("<title>Entry Saved</title>");
+out.println("<link rel='stylesheet' href='assets/css/style.css'>");
 out.println("</head>");
-
-out.println("<body>");
-
-out.println("<div class='box'>");
-
-out.println("<h2>Data Inserted Successfully</h2>");
-
-out.println("<p>Delay entry has been recorded successfully</p>");
-
-out.println("<a href='dashboard.jsp'>");
-
-out.println("<button type='button'>Back to Dashboard</button>");
-
-out.println("</a>");
-
+out.println("<body style='display:flex; align-items:center; justify-content:center;'>");
+out.println("<div class='glass-panel' style='text-align:center; max-width:450px; width:100%;'>");
+out.println("<div style='font-size:48px; margin-bottom:15px;'>✅</div>");
+out.println("<h2 style='color:var(--success); margin-bottom:10px;'>Data Authenticated</h2>");
+out.println("<p style='color:var(--text-muted); margin-bottom:20px; font-size:15px;'>The breakdown entry log vector was processed successfully onto the centralized storage tables.</p>");
+out.println("<div style='background:#f8fafc; padding:15px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:25px; font-weight:600;'>");
+out.println(alertMessage);
 out.println("</div>");
-
+out.println("<a href='DashboardServlet' style='display:block; text-align:center; padding:12px; background:var(--primary); color:white; text-decoration:none; border-radius:8px; font-weight:600;'>Return to Dashboard</a>");
+out.println("</div>");
 out.println("</body>");
-
 out.println("</html>");
 
 
